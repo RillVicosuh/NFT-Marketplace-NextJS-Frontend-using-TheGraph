@@ -3,8 +3,9 @@ import { useWeb3Contract, useMoralis } from "react-moralis"
 import nftMarketplaceAbi from "../constants/NftMarketplace.json"
 import nftAbi from "../contants/BasicNft.json"
 import Image from "next/image"
-import { Card } from "web3uikit"
+import { Card, useNotification } from "web3uikit"
 import { ethers } from "ethers"
+import UpdateListingModal from "./UpdateListingModal"
 
 //This is an arrow function that can take any address(first parameter) and truncate it to an address that is the length of strLen(second parameter)
 //This will be used to show a shortened version of the nft owners address
@@ -23,7 +24,9 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
     const [imageURI, setImageURI] = useState("")
     const [tokenName, setTokenName] = useState("")
     const [tokenDescription, setTokenDescription] = useState("")
-
+    const [showModal, setShowModal] = useState(false) //showModal is set to false intially, to change it, setShowModal(true) must be called
+    const hideModal = () => setShowModal(false)//Will be used to set showModal to false. Need to be done this way because we are essetially going to pass the setShowModal function to UpdateListingModal script
+    const dispatch = useNotification()
 
     //Utilizing useWeb3Contract to allow us to use the getTokenURI function from the BasicNft in our front end code
     const { runContractFunction: getTokenURI } = useWeb3Contract({
@@ -33,6 +36,17 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
         params: {
             tokenId: tokenId,
         },
+    })
+
+    const { runContractFunction: buyItem } = useWeb3Contract({
+        abi: nftMarketplaceAbi,
+        contractAddress: marketplaceAddress,
+        functionName: "buyItem",
+        msgValue: price,
+        params: {
+            nftAddress: nftAddress,
+            tokenId: tokenId,
+        }
     })
 
     //This is the function that tokenURI in order to update the ImageURI so that the image can be displayed in the front end
@@ -69,29 +83,59 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
     //If the current wallet that is connected is the seller, then it will display "you" instead of the seller address
     const formattedSellerAddress = isOwnedByUser ? "you" : truncateStr(seller || "", 15)
 
+    //This arrow function is called when the card is clicked. 
+    //If the owner is the one that clicks the card, it set showModal to true.
+    //If not the owner, the buyItem function we imported from the NftMarketplace address will be invoked and metamask will pop up to initiate a purchase
+    const handleCardClick = () => {
+        isOwnedByUser
+            ? setShowModal(true)
+            : buyItem({
+                onError: (error) => console.log(error),
+                onSuccess: () => handleBuyItemSuccess(),
+            })
+    }
+
+    const handleBuytItemSucess = () => {
+        dispatch({
+            type: "success",
+            message: "Item has been purchased!", //message displayed on the dispatch
+            title: "Item Purchased",
+            position: "topR", //This means the dispatch will appear at the top right
+        })
+    }
+
     //This code will actually display the image on the front end using the imageURI that was set when we called setImageURI in the updateUI function 
     //We will also display the token Name, token description, the owner, and the price
     return (
         <div>
             <div>
                 {imageURI ? (
-                    <Card title={tokenName} description={tokenDescription}>
-                        <div>
+                    <div>
+                        <UpdateListingModal
+                            isVisible={showModal}
+                            tokenId={tokenId}
+                            marketplaceAddress={{ marketplaceAddress }}
+                            nftAddress={{ nftAddress }}
+                            onClose={hideModal}
+                        />
+                        <Card title={tokenName} description={tokenDescription} onClick={handleCardClick}>
                             <div>
-                                <div>#{tokenId}</div>
-                                <div className="italic text-sm">Owned by {formattedSellerAddress}</div>
-                                <Image
-                                    loader={() => imageURI}
-                                    src={imageURI}
-                                    height="200"
-                                    width="200"
-                                />
-                                <div className="font-bold">
-                                    {ethers.utils.formatUnits(price, "ether")} ETH
+                                <div>
+                                    <div>#{tokenId}</div>
+                                    <div className="italic text-sm">Owned by {formattedSellerAddress}</div>
+                                    <Image
+                                        loader={() => imageURI}
+                                        src={imageURI}
+                                        height="200"
+                                        width="200"
+                                    />
+                                    <div className="font-bold">
+                                        {ethers.utils.formatUnits(price, "ether")} ETH
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </Card>
+                        </Card>
+                    </div>
                 ) : (
                     <div>Loading...</div>
                 )}
