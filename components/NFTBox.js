@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import nftMarketplaceAbi from "../constants/NftMarketplace.json"
-import nftAbi from "../contants/BasicNft.json"
+import nftAbi from "../constants/BasicNft.json"
 import Image from "next/image"
 import { Card, useNotification } from "web3uikit"
 import { ethers } from "ethers"
 import UpdateListingModal from "./UpdateListingModal"
+import cardStyles from '../styles/Card.module.css';
+import modalStyles from '../styles/Modal.module.css';
 
 //This is an arrow function that can take any address(first parameter) and truncate it to an address that is the length of strLen(second parameter)
 //This will be used to show a shortened version of the nft owners address
@@ -32,7 +34,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
     const { runContractFunction: getTokenURI } = useWeb3Contract({
         abi: nftAbi,
         contractAddress: nftAddress,
-        functionName: "tokenUri",
+        functionName: "tokenURI",
         params: {
             tokenId: tokenId,
         },
@@ -58,11 +60,13 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
         //If the tokenURI exists, continue
         if (tokenURI) {
             const requestURL = tokenURI.replace("ipfs://", "https://ipfs.io/ipfs/")
+            console.log(requestURL)
             //Get the json data from the tokenURI
             const tokenURIResponse = await (await fetch(requestURL)).json()
             //retrieve the imageURI in the json data
-            const imageURI = tokenURIResponse.imageURI
+            const imageURI = tokenURIResponse.image
             const imageURIURL = imageURI.replace("ipfs://", "https://ipfs.io/ipfs/")
+            console.log(imageURIURL)
             //Set the imageURI retrieved from the tokenURI as the imageURI for the front end to display
             setImageURI(imageURIURL)
             //Also setting the token name and description
@@ -106,7 +110,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
 
     //This code will actually display the image on the front end using the imageURI that was set when we called setImageURI in the updateUI function 
     //We will also display the token Name, token description, the owner, and the price
-    return (
+    /*return (
         <div>
             <div>
                 {imageURI ? (
@@ -138,6 +142,44 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
                     </div>
                 ) : (
                     <div>Loading...</div>
+                )}
+            </div>
+        </div>
+    )*/
+    return (
+        <div>
+            <div>
+                {imageURI ? (
+                    <div className={cardStyles.card}>
+                        <UpdateListingModal
+                            className={modalStyles.modal}
+                            isVisible={showModal}
+                            tokenId={tokenId}
+                            marketplaceAddress={{ marketplaceAddress }}
+                            nftAddress={{ nftAddress }}
+                            onClose={hideModal}
+                        />
+                        <div className={cardStyles['card-content']} onClick={handleCardClick}>
+                            <h2>{tokenName}</h2>
+                            <p>{tokenDescription}</p>
+                            <div>
+                                <div>#{tokenId}</div>
+                                <div className="italic text-sm">Owned by {formattedSellerAddress}</div>
+                                <Image
+                                    className={cardStyles['card-image']}
+                                    loader={() => imageURI}
+                                    src={imageURI}
+                                    width={200}
+                                    height={200}
+                                />
+                                <div className="font-bold">
+                                    {ethers.utils.formatUnits(price, "ether")} ETH
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className={cardStyles.loader}>Loading...</div>
                 )}
             </div>
         </div>

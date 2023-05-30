@@ -1,4 +1,14 @@
-//This can be coppied to other projects after initializing tailwind. For better looking pages
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root {
+    --dark-color: #111;
+    --light-color: #eee;
+    --accent-color: #0af;
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif; /* Replace with your font of choice */
+    background-color: var(--dark-color);
+    color: var(--light-color);
+  }

@@ -16,7 +16,7 @@
   display: flex;
   flex: 1;
   padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
+  border-top: 1px solid var(--accent-color);
   justify-content: center;
   align-items: center;
 }
@@ -26,16 +26,23 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  color: var(--light-color);
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: var(--accent-color);
 }
 
 .title a {
-  color: #0070f3;
+  color: var(--accent-color);
   text-decoration: none;
 }
 
 .title a:hover,
 .title a:focus,
 .title a:active {
+  color: var(--light-color);
   text-decoration: underline;
 }
 

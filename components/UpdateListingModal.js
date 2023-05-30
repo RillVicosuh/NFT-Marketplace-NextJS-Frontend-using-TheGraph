@@ -1,7 +1,6 @@
 import { useWeb3Contract } from "react-moralis"
 import { Modal, Input, useNotification } from "web3uikit"
 import { useState } from "react"
-import { useWeb3Contract } from "react-moralis"
 import nftMarketplaceAbi from "../constants/NftMarketplace.json"
 import { ethers } from "ethers"
 
@@ -28,7 +27,7 @@ export default function UpdateListingModal({ nftAddress, tokenId, isVisible, mar
         params: {
             nftAddress: nftAddress,
             tokenId: tokenId,
-            newPrice: ether.utils.parseEther(priceToUpdateListingWith || "0")
+            newPrice: ethers.utils.parseEther(priceToUpdateListingWith || "0")
         }
     })
     return (
@@ -42,7 +41,7 @@ export default function UpdateListingModal({ nftAddress, tokenId, isVisible, mar
                     onError: (error) => {
                         console.log(error)
                     },
-                    onSuccess: handleUpdateListingSuccess,
+                    onSuccess: () => handleUpdateListingSuccess(),
                 })
             }}
         >
@@ -53,7 +52,6 @@ export default function UpdateListingModal({ nftAddress, tokenId, isVisible, mar
                 onChange={(event) => {
                     setPriceToUpdateListingWith(event.target.value)
                 }}
-                onOk={() => { }}
             />
         </Modal>
     )
