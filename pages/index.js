@@ -23,7 +23,7 @@ export default function Home() {
         {!isWeb3Enabled && (
           <div>Please Connect Your Wallet</div>
         )}
-        {isWeb3Enabled && chainId !== "31337" && chainId !== "11155111"(
+        {isWeb3Enabled && chainId !== "31337" && chainId !== "11155111" && (
           <div>Please Connect Your Wallet To The Sepolia Network</div>
         )}
         {loading || !listedNfts ? (
