@@ -19,30 +19,32 @@ export default function Home() {
   return (
     <div className="container mx-auto">
       <h1 className="py-4 px-4 font-bold text-2xl">Recently Listed</h1>
-      <div className="flex flex-wrap">
+      <div>
         {!isWeb3Enabled && (
           <div>Please Connect Your Wallet</div>
         )}
-        {isWeb3Enabled && chainId !== "31337" && chainId !== "11155111" && (
+        {isWeb3Enabled && chainId !== "11155111" && (
           <div>Please Connect Your Wallet To The Sepolia Network</div>
         )}
-        {loading || !listedNfts ? (
-          <div>Loading...</div>
-        ) : (
-          listedNfts.activeItems.map((nft) => {
-            const { price, nftAddress, tokenId, seller } = nft
-            return (
-              <NFTBox
-                price={price}
-                nftAddress={nftAddress}
-                tokenId={tokenId}
-                marketplaceAddress={marketplaceAddress}
-                seller={seller}
-                key={`${nftAddress}${tokenId}`}
-              />
-            )
-          })
-        )}
+        <div className="flex flex-wrap">
+          {loading || !listedNfts ? (
+            <div>Loading...</div>
+          ) : (
+            listedNfts.activeItems.map((nft) => {
+              const { price, nftAddress, tokenId, seller } = nft
+              return (
+                <NFTBox
+                  price={price}
+                  nftAddress={nftAddress}
+                  tokenId={tokenId}
+                  marketplaceAddress={marketplaceAddress}
+                  seller={seller}
+                  key={`${nftAddress}${tokenId}`}
+                />
+              )
+            })
+          )}
+        </div>
       </div>
     </div>
   )
