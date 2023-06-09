@@ -7,11 +7,11 @@ import networkMapping from "../constants/networkMapping.json"
 import GET_ACTIVE_ITEMS from "../constants/subgraphQueries"
 import { useQuery } from "@apollo/client"
 
-//Won't need Cloud Function or frp folders with the cloud. Also for the graph, index.js and app.js will be different
 export default function Home() {
   const { isWeb3Enabled, chainId } = useMoralis()
   const chainString = chainId ? parseInt(chainId).toString() : "31337"
-  const marketplaceAddress = networkMapping[chainString].NftMarketplace[0]
+  //const marketplaceAddress = networkMapping[chainString].NftMarketplace[0]
+  const marketplaceAddress = networkMapping["11155111"].NftMarketplace[0]//Hardcoding the network here so that it displays even if the user is connected to a different network
 
   //Using GET_ACTIVE_ITEMS from subgraphQueries to return the listed nfts
   const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
