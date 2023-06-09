@@ -23,7 +23,7 @@ export default function Home() {
         {!isWeb3Enabled && (
           <div>Please Connect Your Wallet</div>
         )}
-        {isWeb3Enabled && chainId !== "11155111" && (
+        {isWeb3Enabled && chainString !== "11155111" && (
           <div>Please Connect Your Wallet To The Sepolia Network</div>
         )}
         <div className="flex flex-wrap">
