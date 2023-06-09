@@ -43,7 +43,7 @@ export default function Home() {
             })
           )
         ) : (
-          <div>Web3 Currently Not Enabled</div>
+          <div>Please Connect Your Wallet To The Sepolia Network</div>
         )}
       </div>
     </div>
