@@ -77,41 +77,33 @@ export default function Home() {
     }
 
     return (
-        <div>
-            {!isWeb3Enabled && (
-                <div>Please Connect Your Wallet</div>
-            )}
-            {isWeb3Enabled && chainString !== "11155111" && (
-                <div>Please Connect Your Wallet To The Sepolia Network</div>
-            )}
-            <div className={styles.container}>
-                <Form
-                    onSubmit={approveAndList}//This will call approveAndList function when the form is submitted and automatically pass data below
-                    data={[
-                        {
-                            name: "NFT Address",
-                            type: "text",
-                            inputWidth: "50%",
-                            value: "",
-                            key: "nftAddress",
-                        },
-                        {
-                            name: "Token ID",
-                            type: "number",
-                            value: "",
-                            key: "tokenId",
-                        },
-                        {
-                            name: "Price (in ETH)",
-                            type: "number",
-                            value: "",
-                            key: "price"
-                        }
-                    ]}
-                    title="Sell Your NFT"
-                    id="Main Form"
-                />
-            </div>
+        <div className={styles.container}>
+            <Form
+                onSubmit={approveAndList}//This will call approveAndList function when the form is submitted and automatically pass data below
+                data={[
+                    {
+                        name: "NFT Address",
+                        type: "text",
+                        inputWidth: "50%",
+                        value: "",
+                        key: "nftAddress",
+                    },
+                    {
+                        name: "Token ID",
+                        type: "number",
+                        value: "",
+                        key: "tokenId",
+                    },
+                    {
+                        name: "Price (in ETH)",
+                        type: "number",
+                        value: "",
+                        key: "price"
+                    }
+                ]}
+                title="Sell Your NFT"
+                id="Main Form"
+            />
         </div>
     )
 }
