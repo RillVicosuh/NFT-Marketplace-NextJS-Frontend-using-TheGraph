@@ -12,7 +12,8 @@ export default function Home() {
     const { chainId } = useMoralis()
     //Chain id comes in hex form so we need to convert it if it exists
     const chainString = chainId ? parseInt(chainId).toString() : "31337"
-    const marketplaceAddress = networkMapping[chainString].NftMarketplace[0]
+    //const marketplaceAddress = networkMapping[chainString].NftMarketplace[0]
+    const marketplaceAddress = networkMapping["11155111"].NftMarketplace[0] //Again, hardcoding here like I did in index.js to display sell page even if connected to a different network
     const dispatch = useNotification()
 
     const { runContractFunction } = useWeb3Contract()
@@ -76,33 +77,41 @@ export default function Home() {
     }
 
     return (
-        <div className={styles.container}>
-            <Form
-                onSubmit={approveAndList}//This will call approveAndList function when the form is submitted and automatically pass data below
-                data={[
-                    {
-                        name: "NFT Address",
-                        type: "text",
-                        inputWidth: "50%",
-                        value: "",
-                        key: "nftAddress",
-                    },
-                    {
-                        name: "Token ID",
-                        type: "number",
-                        value: "",
-                        key: "tokenId",
-                    },
-                    {
-                        name: "Price (in ETH)",
-                        type: "number",
-                        value: "",
-                        key: "price"
-                    }
-                ]}
-                title="Sell Your NFT"
-                id="Main Form"
-            />
+        <div>
+            {!isWeb3Enabled && (
+                <div>Please Connect Your Wallet</div>
+            )}
+            {isWeb3Enabled && chainString !== "11155111" && (
+                <div>Please Connect Your Wallet To The Sepolia Network</div>
+            )}
+            <div className={styles.container}>
+                <Form
+                    onSubmit={approveAndList}//This will call approveAndList function when the form is submitted and automatically pass data below
+                    data={[
+                        {
+                            name: "NFT Address",
+                            type: "text",
+                            inputWidth: "50%",
+                            value: "",
+                            key: "nftAddress",
+                        },
+                        {
+                            name: "Token ID",
+                            type: "number",
+                            value: "",
+                            key: "tokenId",
+                        },
+                        {
+                            name: "Price (in ETH)",
+                            type: "number",
+                            value: "",
+                            key: "price"
+                        }
+                    ]}
+                    title="Sell Your NFT"
+                    id="Main Form"
+                />
+            </div>
         </div>
     )
 }
