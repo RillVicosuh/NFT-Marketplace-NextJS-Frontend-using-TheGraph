@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-# NFT-Marketplace-Backend-Hardhat
+# NFT-Marketplace-FrontEnd-Hardhat
 Here is the link to the Marketplace: https://nft-marketplace-next-js-frontend-using-the-graph.vercel.app/
 
 *Important: Please connect your wallet and use the sepolia network*
