@@ -150,7 +150,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
         <div>
             <div>
                 {imageURI ? (
-                    <div className={cardStyles.card}>
+                    <div>
                         <UpdateListingModal
                             isVisible={showModal}
                             tokenId={tokenId}
