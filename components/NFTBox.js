@@ -110,7 +110,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
 
     //This code will actually display the image on the front end using the imageURI that was set when we called setImageURI in the updateUI function 
     //We will also display the token Name, token description, the owner, and the price
-    /*return (
+    return (
         <div>
             <div>
                 {imageURI ? (
@@ -145,13 +145,14 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
                 )}
             </div>
         </div>
-    )*/
-    return (
+    )
+    /*return (
         <div>
             <div>
                 {imageURI ? (
-                    <div>
+                    <div className={cardStyles.card}>
                         <UpdateListingModal
+                            className={modalStyles.modal}
                             isVisible={showModal}
                             tokenId={tokenId}
                             marketplaceAddress={{ marketplaceAddress }}
@@ -182,5 +183,5 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
                 )}
             </div>
         </div>
-    )
+    )*/
 }
