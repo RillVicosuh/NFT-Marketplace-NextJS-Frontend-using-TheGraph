@@ -16,8 +16,8 @@ export default function Home() {
   const marketplaceAddress = networkMapping["11155111"].NftMarketplace[0]//Hardcoding the network here so that it displays even if the user is connected to a different network
 
   //Using GET_ACTIVE_ITEMS from subgraphQueries to return the listed nfts
-  //const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
-  const { nfts, loading, error } = useNfts();
+  const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
+  //const { nfts, loading, error } = useNfts();
 
 
   return (
@@ -88,39 +88,6 @@ export default function Home() {
             })
           )}
         </div>
-      </div>
-    </div>
-  )*/
-
-  /*return (
-    <div className="container mx-auto">
-      <h1 className="py-4 px-4 font-bold text-2xl">Recently Listed</h1>
-      <div className="flex flex-wrap">
-        {isWeb3Enabled && chainId ? (
-          //If it's loading or we don't have listed nfts
-          loading || !listedNfts ? (
-            <div>Loading...</div>
-          ) : (
-            //retrieving the price, nftAddress, tokenId, and seller of the listed items to pass is to the NFTBox
-            listedNfts.activeItems.map((nft) => {
-              const { price, nftAddress, tokenId, seller } = nft
-              return marketplaceAddress ? (
-                <NFTBox
-                  price={price}
-                  nftAddress={nftAddress}
-                  tokenId={tokenId}
-                  marketplaceAddress={marketplaceAddress}
-                  seller={seller}
-                  key={`${nftAddress}${tokenId}`}
-                />
-              ) : (
-                <div>Network error, please switch to a supported network. </div>
-              )
-            })
-          )
-        ) : (
-          <div>Please Connect Your Wallet To The Sepolia Network</div>
-        )}
       </div>
     </div>
   )*/
