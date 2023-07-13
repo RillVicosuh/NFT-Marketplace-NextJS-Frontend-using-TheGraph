@@ -27,6 +27,41 @@ export default function Home() {
           <div>Please Connect Your Wallet To The Sepolia Network</div>
         )}
         <div className="flex flex-wrap">
+          {loading ? (
+            <div>Loading...</div>
+          ) : error ? (
+            <div>Error: {error.message}</div>
+          ) : (
+            listedNfts.activeItems.map((nft) => {
+              const { price, nftAddress, tokenId, seller } = nft
+              return (
+                <NFTBox
+                  price={price}
+                  nftAddress={nftAddress}
+                  tokenId={tokenId}
+                  marketplaceAddress={marketplaceAddress}
+                  seller={seller}
+                  key={`${nftAddress}${tokenId}`}
+                />
+              )
+            })
+          )}
+        </div>
+      </div>
+    </div>
+  )
+
+  /*return (
+    <div className="container mx-auto">
+      <h1 className="py-4 px-4 font-bold text-2xl">Recently Listed</h1>
+      <div>
+        {!isWeb3Enabled && (
+          <div>Please Connect Your Wallet</div>
+        )}
+        {isWeb3Enabled && chainString !== "11155111" && (
+          <div>Please Connect Your Wallet To The Sepolia Network</div>
+        )}
+        <div className="flex flex-wrap">
           {loading || !listedNfts ? (
             <div>Loading...</div>
           ) : (
@@ -49,7 +84,7 @@ export default function Home() {
         </div>
       </div>
     </div>
-  )
+  )*/
 
   /*return (
     <div className="container mx-auto">

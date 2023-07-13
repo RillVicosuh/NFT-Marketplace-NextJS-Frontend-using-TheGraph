@@ -90,15 +90,15 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
     //This arrow function is called when the card is clicked. 
     //If the owner is the one that clicks the card, it set showModal to true.
     //If not the owner, the buyItem function we imported from the NftMarketplace address will be invoked and metamask will pop up to initiate a purchase
-    /*const handleCardClick = () => {
+    const handleCardClick = () => {
         isOwnedByUser
             ? setShowModal(true)
             : buyItem({
                 onError: (error) => console.log(error),
                 onSuccess: () => handleBuyItemSuccess(),
             })
-    }*/
-    const handleCardClick = async () => {
+    }
+    /*const handleCardClick = async () => {
         if (isOwnedByUser) {
             setShowModal(true)
         } else {
@@ -119,7 +119,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
                 })
             }
         }
-    }
+    }*/
 
     const handleBuyItemSuccess = () => {
         dispatch({
