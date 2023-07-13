@@ -16,7 +16,8 @@ export default function Home() {
   const marketplaceAddress = networkMapping["11155111"].NftMarketplace[0]//Hardcoding the network here so that it displays even if the user is connected to a different network
 
   //Using GET_ACTIVE_ITEMS from subgraphQueries to return the listed nfts
-  const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
+  //const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
+  const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS, { fetchPolicy: 'no-cache' });
   //const { nfts, loading, error } = useNfts();
 
 
