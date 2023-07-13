@@ -6,7 +6,7 @@ import NFTBox from "../components/NFTBox"
 import networkMapping from "../constants/networkMapping.json"
 import GET_ACTIVE_ITEMS from "../constants/subgraphQueries"
 import { useQuery } from "@apollo/client"
-import useNFTs from '../components/useNFTs';
+import useNfts from '../components/useNfts';
 
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
 
   //Using GET_ACTIVE_ITEMS from subgraphQueries to return the listed nfts
   //const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
-  const { nfts, loading, error } = useNFTs();
+  const { nfts, loading, error } = useNfts();
 
 
   return (
