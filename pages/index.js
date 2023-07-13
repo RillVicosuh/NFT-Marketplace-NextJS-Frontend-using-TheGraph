@@ -6,6 +6,8 @@ import NFTBox from "../components/NFTBox"
 import networkMapping from "../constants/networkMapping.json"
 import GET_ACTIVE_ITEMS from "../constants/subgraphQueries"
 import { useQuery } from "@apollo/client"
+import useNFTs from '../components/useNFTs';
+
 
 export default function Home() {
   const { isWeb3Enabled, chainId } = useMoralis()
@@ -14,7 +16,9 @@ export default function Home() {
   const marketplaceAddress = networkMapping["11155111"].NftMarketplace[0]//Hardcoding the network here so that it displays even if the user is connected to a different network
 
   //Using GET_ACTIVE_ITEMS from subgraphQueries to return the listed nfts
-  const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
+  //const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
+  const { nfts, loading, error } = useNFTs();
+
 
   return (
     <div className="container mx-auto">
