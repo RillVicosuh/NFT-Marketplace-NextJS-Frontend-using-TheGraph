@@ -22,7 +22,7 @@ const truncateStr = (fullStr, strLen) => {
 }
 
 export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress, seller }) {
-    const { isWeb3Enabled, account } = useMoralis()
+    const { isWeb3Enabled, account, provider } = useMoralis()
     const [imageURI, setImageURI] = useState("")
     const [tokenName, setTokenName] = useState("")
     const [tokenDescription, setTokenDescription] = useState("")
@@ -90,13 +90,35 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
     //This arrow function is called when the card is clicked. 
     //If the owner is the one that clicks the card, it set showModal to true.
     //If not the owner, the buyItem function we imported from the NftMarketplace address will be invoked and metamask will pop up to initiate a purchase
-    const handleCardClick = () => {
+    /*const handleCardClick = () => {
         isOwnedByUser
             ? setShowModal(true)
             : buyItem({
                 onError: (error) => console.log(error),
                 onSuccess: () => handleBuyItemSuccess(),
             })
+    }*/
+    const handleCardClick = async () => {
+        if (isOwnedByUser) {
+            setShowModal(true)
+        } else {
+            const userBalance = await provider.getBalance(account);
+            const priceInWei = ethers.utils.parseUnits(price.toString(), 'ether');
+
+            if (userBalance.lt(priceInWei)) {
+                dispatch({
+                    type: "error",
+                    message: "You do not have enough funds to buy this NFT", //error message
+                    title: "Insufficient funds",
+                    position: "topR", //This means the dispatch will appear at the top right
+                })
+            } else {
+                buyItem({
+                    onError: (error) => console.log(error),
+                    onSuccess: () => handleBuyItemSuccess(),
+                })
+            }
+        }
     }
 
     const handleBuyItemSuccess = () => {
