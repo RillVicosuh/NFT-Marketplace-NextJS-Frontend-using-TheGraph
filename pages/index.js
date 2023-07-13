@@ -31,9 +31,11 @@ export default function Home() {
             <div>Loading...</div>
           ) : error ? (
             <div>Error: {error.message}</div>
+          ) : !listedNfts ? (
+            <div>No NFTs found</div>
           ) : (
             listedNfts.activeItems.map((nft) => {
-              const { price, nftAddress, tokenId, seller } = nft
+              const { price, nftAddress, tokenId, seller } = nft;
               return (
                 <NFTBox
                   price={price}
@@ -43,7 +45,7 @@ export default function Home() {
                   seller={seller}
                   key={`${nftAddress}${tokenId}`}
                 />
-              )
+              );
             })
           )}
         </div>
