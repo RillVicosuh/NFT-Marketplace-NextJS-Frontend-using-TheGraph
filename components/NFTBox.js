@@ -203,6 +203,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
                                     <div>#{tokenId}</div>
                                     <div className="italic text-sm">Owned by {formattedSellerAddress}</div>
                                     <Image
+                                        className={cardStyles['card-image']}
                                         loader={() => imageURI}
                                         src={imageURI}
                                         height="200"
