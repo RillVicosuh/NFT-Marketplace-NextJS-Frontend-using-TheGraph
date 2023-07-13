@@ -186,17 +186,17 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
     )*/
     return (
         <div>
+            <UpdateListingModal
+                className={modalStyles.modal}
+                isVisible={showModal}
+                tokenId={tokenId}
+                marketplaceAddress={{ marketplaceAddress }}
+                nftAddress={{ nftAddress }}
+                onClose={hideModal}
+            />
             <div>
                 {imageURI ? (
                     <div className={cardStyles.card}>
-                        <UpdateListingModal
-                            className={modalStyles.modal}
-                            isVisible={showModal}
-                            tokenId={tokenId}
-                            marketplaceAddress={{ marketplaceAddress }}
-                            nftAddress={{ nftAddress }}
-                            onClose={hideModal}
-                        />
                         <Card title={tokenName} description={tokenDescription} onClick={handleCardClick}>
                             <div>
                                 <div>
