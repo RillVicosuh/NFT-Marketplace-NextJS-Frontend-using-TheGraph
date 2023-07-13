@@ -22,7 +22,7 @@ const truncateStr = (fullStr, strLen) => {
 }
 
 export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress, seller }) {
-    const { isWeb3Enabled, account, provider } = useMoralis()
+    const { isWeb3Enabled, account, web3 } = useMoralis()
     const [imageURI, setImageURI] = useState("")
     const [tokenName, setTokenName] = useState("")
     const [tokenDescription, setTokenDescription] = useState("")
@@ -102,7 +102,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
         if (isOwnedByUser) {
             setShowModal(true)
         } else {
-            const userBalance = await provider.getBalance(account);
+            const userBalance = ethers.BigNumber.from(await web3.eth.getBalance(account));
             const priceInWei = ethers.utils.parseUnits(price.toString(), 'ether');
 
             if (userBalance.lt(priceInWei)) {
