@@ -13,6 +13,10 @@ const client = new ApolloClient({
 })
 
 function MyApp({ Component, pageProps }) {
+  useEffect(() => {
+    console.log('Apollo Client ready');
+  }, []);
+
   return (
     //We are making sure that the tab icon at the top of the search enging says "NFT Marketplace"
     //Also wrapping the components in the Moralis Provider
