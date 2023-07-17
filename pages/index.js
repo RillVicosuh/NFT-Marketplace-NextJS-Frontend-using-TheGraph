@@ -19,6 +19,7 @@ export default function Home() {
   //const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
   const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS, { fetchPolicy: 'no-cache' });
   //const { nfts, loading, error } = useNfts();
+  //NFTBox.updateUI();
 
 
   return (
@@ -34,6 +35,7 @@ export default function Home() {
         <div className="flex flex-wrap">
           {loading ? (
             <div>Loading...</div>
+
           ) : error ? (
             <div>Error: {error.message}</div>
           ) : !listedNfts ? (
