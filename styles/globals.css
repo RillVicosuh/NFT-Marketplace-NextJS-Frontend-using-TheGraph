@@ -8,7 +8,7 @@
   }
   
   body {
-    background-image: url('/NFT_Marketplace_Background.jpg');
+    background-image: url('../NFT_Marketplace_Background.jpg');
     font-family: 'Roboto', sans-serif; /* Replace with your font of choice */
     background-color: var(--dark-color);
     color: var(--light-color);
